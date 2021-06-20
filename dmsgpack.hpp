@@ -19,6 +19,7 @@
 #ifndef __drift_orm_msgpack_hpp__
 #define __drift_orm_msgpack_hpp__
 
+#include "dexpand.hpp"
 #include <msgpack.hpp>
 
 namespace msgpack {
@@ -140,7 +141,11 @@ T msgpack_unpack(const Bytes& bytes) {
 namespace msgpack {                                                                                \
 MSGPACK_API_VERSION_NAMESPACE(MSGPACK_DEFAULT_API_NS) {                                            \
 namespace adaptor {                                                                                \
-enum struct_name_##_field_index { __VA_ARGS__ };                                                   \
+                                                                                                   \
+struct struct_name_##_field_index {                                                                \
+  enum index { __VA_ARGS__ };                                                                      \
+};                                                                                                 \
+                                                                                                   \
 template<>                                                                                         \
 struct pack<struct_name_> {                                                                        \
     template <typename Stream>                                                                     \
