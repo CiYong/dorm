@@ -21,6 +21,7 @@
 
 #include "dvisit.hpp"
 #include "dmsgpack.hpp"
+#include "dredis.hpp"
 
 #define DORM(struct_name_, store_type_, primary_key_, ...)           \
     DORM_VISIT(struct_name_, store_type_, primary_key_, __VA_ARGS__) \

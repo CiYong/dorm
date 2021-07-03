@@ -141,11 +141,9 @@ T msgpack_unpack(const Bytes& bytes) {
 namespace msgpack {                                                                                \
 MSGPACK_API_VERSION_NAMESPACE(MSGPACK_DEFAULT_API_NS) {                                            \
 namespace adaptor {                                                                                \
-                                                                                                   \
-struct struct_name_##_field_index {                                                                \
-  enum index { __VA_ARGS__ };                                                                      \
+struct struct_name_##_fields {                                                                     \
+    enum index { __VA_ARGS__ };                                                                    \
 };                                                                                                 \
-                                                                                                   \
 template<>                                                                                         \
 struct pack<struct_name_> {                                                                        \
     template <typename Stream>                                                                     \
@@ -159,7 +157,7 @@ struct pack<struct_name_> {                                                     
 template<>                                                                                         \
 struct convert<struct_name_> {                                                                     \
     using self_type = struct_name_;                                                                \
-    using field_type = struct_name_##_field_index;                                                 \
+    using field_type = struct_name_##_fields;                                                      \
     msgpack::object const& operator()(msgpack::object const& o, struct_name_& v) const {           \
         if (o.type != msgpack::type::ARRAY) throw msgpack::type_error();                           \
         if (o.via.array.size != DRIFT_PP_NARG(__VA_ARGS__)) throw msgpack::type_error();           \
